@@ -1,0 +1,6 @@
+*.bas text eol=crlf linguist-language=Visual-Basic
+*.cls text eol=crlf linguist-language=Visual-Basic
+*.frm text eol=crlf linguist-language=Visual-Basic
+*.md text eol=lf
+*.xlsm binary
+*.png binary

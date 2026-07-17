@@ -1,0 +1,17 @@
+# Excel temporary and recovery files
+~$*.xls*
+*.xlk
+*.tmp
+*.bak
+
+# Local editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local test output
+*.log
+test-output/
+
