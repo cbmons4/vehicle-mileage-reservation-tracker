@@ -1,23 +1,80 @@
-# VBA Source Map
+# Vehicle Mileage and Reservation Tracker
 
-This directory contains a complete export of the workbook's VBA project so the automation can be reviewed in GitHub without opening the binary workbook.
+An Excel/VBA application for mileage entry, vehicle reservations, maintenance history, operational controls, and management reporting.
 
-## Core Modules
+**Designed and built end to end by Charles Monsanto.** Charles owned requirements discovery, workflow and control design, VBA implementation, reporting, test design, privacy sanitization, and release documentation.
 
-| File | Responsibility |
-|---|---|
-| `modFleetMileageTool.bas` | Data entry, validation, reporting, maintenance status, calendars, navigation, protection, and performance controls |
-| `modFleetDashboardLayout.bas` | Dashboard layout, selector popups, and visual alignment |
-| `modFleetUndoActions.bas` | Reversible mileage and reservation transactions |
-| `ThisWorkbook.cls` | Workbook-open initialization |
+![Dashboard](screenshots/dashboard.png)
 
-## Worksheet Modules
+## Business Problem
 
-`Sheet1.cls` through `Sheet10.cls` are the exported worksheet document modules. They are included for completeness; some contain event procedures while others are intentionally empty.
+Small fleets are often coordinated through separate spreadsheets, calendars, and messages. That fragmentation makes it difficult to prevent booking conflicts, preserve historical vehicle status, correct transactions safely, and produce consistent utilization and mileage reports. This application brings those workflows into one controlled desktop tool built on software already familiar to many operations teams.
 
-## Reviewing or Reusing the Export
+## What the Application Does
 
-The `.bas` and `.cls` files are plain-text exports. The executable copy of the project remains embedded in `Vehicle Mileage and Reservation Tracker.xlsm`.
+- Records trip dates, drivers, purposes, and odometer readings, then updates the vehicle record and dependent reports.
+- Supports single-day and multi-day reservations, with one controlled record per vehicle-date.
+- Allows multiple bookings for the same vehicle on the same day when their times do not overlap.
+- Uses half-open time boundaries: a reservation occupies `[start, end)`, so an 8:00 AM-12:00 PM booking may be followed by a 12:00 PM-5:00 PM booking.
+- Blocks actual time overlaps, invalid time ranges, double bookings, and reservations during maintenance.
+- Loads recent transactions into the dashboard for controlled editing or deletion; multi-day reservations are handled as a group.
+- Preserves dated maintenance history instead of replacing history with only the vehicle's current status.
+- Produces weekly schedules, monthly mileage history, fiscal-year totals, trip counts, scheduled hours, and current vehicle status.
 
-Excel document modules cannot be imported as ordinary class modules without reconnecting them to their corresponding workbook objects. Use the source files primarily for review, version history, and controlled maintenance.
+## Controls and Reliability
 
+- Required-field, date, time, vehicle, driver, and odometer validation runs before any table write.
+- Reservation conflict logic evaluates the vehicle, date, maintenance state, and half-open time interval.
+- Mileage edits and deletions recalculate the affected vehicle odometer and refresh dependent reports.
+- Reservation edits exclude the selected group from conflict checks, then update, add, or remove its dated rows as one workflow.
+- Generated report sheets are protected from accidental direct changes while approved dashboard actions remain available.
+- VBA restores Excel events, calculation, and screen state on success and error paths.
+
+## Lightweight Architecture
+
+The solution uses structured Excel `ListObject` tables as its data store, worksheet event modules as a thin interaction layer, and three standard VBA modules for workflow, presentation, and controlled corrections. It requires no server, external database, add-in, or data connection. The complete exported source is available in [`src/vba`](src/vba), with design details in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+## Screens
+
+### Weekly Reservations
+
+![Weekly reservations](screenshots/weekly-reservations.png)
+
+### Monthly Mileage and Maintenance History
+
+![Monthly mileage](screenshots/monthly-mileage.png)
+
+## Repository Contents
+
+```text
+Vehicle Mileage and Reservation Tracker.xlsm  Macro-enabled demonstration workbook
+src/vba/                                      Exported VBA source and event modules
+screenshots/                                  Sanitized application previews
+docs/ARCHITECTURE.md                          Data flow, rules, and component design
+docs/TESTING.md                               Functional, boundary, and privacy verification
+CHANGELOG.md                                  Public portfolio release history
+LICENSE                                       Portfolio review terms
+```
+
+## Run the Workbook
+
+1. Download `Vehicle Mileage and Reservation Tracker.xlsm`.
+2. Open it in Microsoft Excel Desktop for Windows.
+3. Select **Enable Content** to use the dashboard controls.
+
+VBA does not run in GitHub's file preview or Excel for the web. Reviewers can inspect the plain-text VBA export without enabling macros.
+
+## Privacy
+
+The public portfolio edition uses synthetic vehicles, people, identifiers, mileage, reservation purposes, service locations, and maintenance events. It contains no operational records, organization-specific branding, confidential information, or external data connections.
+
+## Documentation
+
+- [Portfolio overview PDF](docs/Vehicle%20Mileage%20and%20Reservation%20Tracker%20-%20Portfolio%20Overview.pdf)
+- [Architecture and data flow](docs/ARCHITECTURE.md)
+- [Testing and privacy verification](docs/TESTING.md)
+- [VBA component map](src/vba/README.md)
+
+## Portfolio Context
+
+Charles Monsanto independently translated a recurring operations problem into a maintainable Excel application. The project demonstrates product ownership, process analysis, internal-control design, VBA engineering, management reporting, regression testing, and responsible preparation of synthetic public demonstration data. No quantified savings are claimed because time or cost reductions were not formally measured.
