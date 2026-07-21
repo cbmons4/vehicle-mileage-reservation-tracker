@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.3 - 2026-07-20
+
+- Normalized heading and body spacing, aligned cards, captions, and bullets, and completed final two-page visual consistency QA.
+
 ## 2.1.2 - 2026-07-20
 
 - Rebuilt the public two-page portfolio overview for cleaner executive readability, corrected measured text flow and graphics, and refreshed visual QA.
