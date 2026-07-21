@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.2 - 2026-07-20
+
+- Rebuilt the public two-page portfolio overview for cleaner executive readability, corrected measured text flow and graphics, and refreshed visual QA.
+
 ## 2.1.1 - 2026-07-20
 
 - Updated the synthetic Demo SUV example to 530 July miles, demonstrating the green `>=500` target threshold.
