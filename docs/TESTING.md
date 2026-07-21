@@ -17,6 +17,7 @@ The 2026-07-20 release candidate passed checks covering:
 - conflict rejection for actual time overlaps and maintenance dates;
 - dated maintenance history in the mileage log, monthly report, and weekly view;
 - weekly reservations, monthly mileage, trip counts, scheduled hours, and fiscal-year totals;
+- green dashboard threshold formatting at `>=500` miles, demonstrated by the synthetic 530-mile Demo SUV July total;
 - expected transaction row counts after corrections;
 - formula-error scanning and macro-enabled package integrity; and
 - restoration of Excel events, calculation, and screen updating after automation.

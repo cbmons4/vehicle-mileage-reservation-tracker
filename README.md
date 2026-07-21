@@ -28,6 +28,7 @@ Small fleets are often coordinated through separate spreadsheets, calendars, and
 - Mileage edits and deletions recalculate the affected vehicle odometer and refresh dependent reports.
 - Reservation edits exclude the selected group from conflict checks, then update, add, or remove its dated rows as one workflow.
 - Generated report sheets are protected from accidental direct changes while approved dashboard actions remain available.
+- The dashboard's synthetic July example shows Demo SUV at 530 miles, with green formatting for the `>=500` target threshold.
 - VBA restores Excel events, calculation, and screen state on success and error paths.
 
 ## Lightweight Architecture
