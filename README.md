@@ -4,11 +4,13 @@ An Excel/VBA application for mileage entry, vehicle reservations, maintenance hi
 
 **Designed and built end to end by Charles Monsanto.** Charles owned requirements discovery, workflow and control design, VBA implementation, reporting, test design, privacy sanitization, and release documentation.
 
+The initial functional release was delivered within four weeks, progressing from workflow study and requirements through development, testing, stakeholder feedback, and refinement.
+
 ![Dashboard](screenshots/dashboard.png)
 
 ## Business Problem
 
-Small fleets are often coordinated through separate spreadsheets, calendars, and messages. That fragmentation makes it difficult to prevent booking conflicts, preserve historical vehicle status, correct transactions safely, and produce consistent utilization and mileage reports. This application brings those workflows into one controlled desktop tool built on software already familiar to many operations teams.
+Small fleet workflows often span separate spreadsheets, calendars, and messages. The project began by learning existing procedures, users, constraints, and controls, then preserved familiar Excel/VBA practices where they worked. Evidence guided targeted validation, correction, and reporting improvements where they added practical value.
 
 ## What the Application Does
 
@@ -78,4 +80,4 @@ The public portfolio edition uses synthetic vehicles, people, identifiers, milea
 
 ## Portfolio Context
 
-Charles Monsanto independently translated a recurring operations problem into a maintainable Excel application. The project demonstrates product ownership, process analysis, internal-control design, VBA engineering, management reporting, regression testing, and responsible preparation of synthetic public demonstration data. No quantified savings are claimed because time or cost reductions were not formally measured.
+Charles Monsanto independently translated a recurring operations need into a maintainable Excel application. The project demonstrates a learn-first approach: understand the operating context, preserve what works, and use evidence to target useful controls and reporting improvements. It also demonstrates product ownership, process analysis, VBA engineering, management reporting, regression testing, and responsible preparation of synthetic public demonstration data. No quantified savings are claimed because time or cost reductions were not formally measured.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.4 - 2026-07-21
+
+- Added the verified four-week initial functional release timeline and aligned the public narrative around learn-first, evidence-based, targeted process improvement.
+
 ## 2.1.3 - 2026-07-20
 
 - Normalized heading and body spacing, aligned cards, captions, and bullets, and completed final two-page visual consistency QA.
