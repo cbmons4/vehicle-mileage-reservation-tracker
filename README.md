@@ -28,10 +28,11 @@ Small fleet workflows often span separate spreadsheets, calendars, and messages.
 - Required-field, date, time, vehicle, driver, and odometer validation runs before any table write.
 - Reservation conflict logic evaluates the vehicle, date, maintenance state, and half-open time interval.
 - Mileage edits and deletions recalculate the affected vehicle odometer and refresh dependent reports.
-- Monthly mileage uses the first and last valid ending-odometer readings in the selected month, with controlled fallbacks for single-entry and imported adjustment rows; the latest positive ending mileage carries forward when a later month has no new reading, and FYTD totals sum the corrected monthly results.
+- Monthly mileage subtracts the latest valid ending odometer through the prior month from the latest valid ending odometer in the selected month. When a month has no new reading, its mileage remains zero and the prior ending odometer carries forward; controlled fallbacks cover the first tracked month and imported adjustment rows. FYTD totals sum these monthly results.
 - Reservation edits exclude the selected group from conflict checks, then update, add, or remove its dated rows as one workflow.
 - Generated report sheets are protected from accidental direct changes while approved dashboard actions remain available.
 - The dashboard applies target-aware formatting to monthly totals, with the 500-mile threshold shown directly in the report.
+- The sanitized workbook includes July and August examples, including an August zero-mile vehicle whose July ending odometer carries forward.
 - VBA restores Excel events, calculation, and screen state on success and error paths.
 
 ## Lightweight Architecture

@@ -22,7 +22,7 @@ The 2026-07-20 release candidate passed checks covering:
 - formula-error scanning and macro-enabled package integrity; and
 - restoration of Excel events, calculation, and screen updating after automation.
 
-The 2026-08-11 maintenance release additionally reconciled every vehicle-month in the generated mileage history against the raw mileage table, including first-to-last monthly odometer baselines, single-entry fallbacks, anomalous lower-odometer rows, zero placeholders, carried-forward positive ending mileage, and FYTD totals derived from corrected monthly results.
+The 2026-08-11 maintenance release additionally reconciled every vehicle-month in the generated mileage history against the raw mileage table. The final calculation subtracts the latest valid ending odometer through the prior month from the latest valid ending odometer in the current month, retains zero mileage with a carried-forward ending odometer when no new reading exists, excludes flagged lower-odometer anomalies and zero placeholders, and derives FYTD mileage from the corrected monthly totals. The sanitized August example verifies totals of 300, 0, 250, and 300 miles, including a 41,925-mile carry-forward for the zero-mile vehicle.
 
 ## Reservation Boundary Cases
 

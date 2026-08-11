@@ -4592,12 +4592,16 @@ Private Function MonthMilesForVehicle(ByVal mileageTable As ListObject, ByVal mo
     Dim endingValue As Variant
     Dim firstDate As Date
     Dim latestDate As Date
+    Dim previousDate As Date
     Dim firstEnding As Long
     Dim latestEnding As Long
+    Dim previousEnding As Long
     Dim matchingRows As Long
+    Dim validEndingRows As Long
     Dim summedMiles As Double
     Dim hasFirstEnding As Boolean
     Dim hasLatestEnding As Boolean
+    Dim hasPreviousEnding As Boolean
     Dim useSourceTotals As Boolean
     Dim notesText As String
 
@@ -4621,6 +4625,7 @@ Private Function MonthMilesForVehicle(ByVal mileageTable As ListObject, ByVal mo
 
                 If IsNumeric(endingValue) Then
                     If CLng(endingValue) > 0 And InStr(1, notesText, "odometer value lower than prior known ending", vbTextCompare) = 0 Then
+                        validEndingRows = validEndingRows + 1
                         If Not hasFirstEnding Or rowDate < firstDate _
                                 Or (rowDate = firstDate And CLng(endingValue) < firstEnding) Then
                             firstDate = rowDate
@@ -4635,13 +4640,26 @@ Private Function MonthMilesForVehicle(ByVal mileageTable As ListObject, ByVal mo
                         End If
                     End If
                 End If
+            ElseIf rowDate < monthStart Then
+                If IsNumeric(endingValue) Then
+                    If CLng(endingValue) > 0 And InStr(1, notesText, "odometer value lower than prior known ending", vbTextCompare) = 0 Then
+                        If Not hasPreviousEnding Or rowDate > previousDate _
+                                Or (rowDate = previousDate And CLng(endingValue) > previousEnding) Then
+                            previousDate = rowDate
+                            previousEnding = CLng(endingValue)
+                            hasPreviousEnding = True
+                        End If
+                    End If
+                End If
             End If
         End If
     Next i
 
     If useSourceTotals Or matchingRows = 0 Or Not hasLatestEnding Then
         MonthMilesForVehicle = summedMiles
-    ElseIf hasFirstEnding And latestEnding >= firstEnding Then
+    ElseIf hasPreviousEnding And latestEnding >= previousEnding Then
+        MonthMilesForVehicle = latestEnding - previousEnding
+    ElseIf validEndingRows > 1 And hasFirstEnding And latestEnding >= firstEnding Then
         MonthMilesForVehicle = latestEnding - firstEnding
     Else
         MonthMilesForVehicle = summedMiles

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.6 - 2026-08-11
+
+- Revised monthly mileage to subtract the latest valid ending odometer through the prior month from the latest valid ending odometer in the current month.
+- Retained the prior ending odometer and a zero monthly total when a vehicle has no new reading in the selected month.
+- Added a sanitized August demonstration month with three active vehicles and one zero-mile carry-forward example.
+- Rebuilt and reconciled all operational history and recalculated FYTD totals from the revised monthly results.
+
 ## 2.1.5 - 2026-08-11
 
 - Corrected monthly mileage totals to use the first and last valid ending-odometer readings within each month, with controlled fallbacks for single-entry and imported adjustment rows.
