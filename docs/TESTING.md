@@ -17,10 +17,12 @@ The 2026-07-20 release candidate passed checks covering:
 - conflict rejection for actual time overlaps and maintenance dates;
 - dated maintenance history in the mileage log, monthly report, and weekly view;
 - weekly reservations, monthly mileage, trip counts, scheduled hours, and fiscal-year totals;
-- green dashboard threshold formatting at `>=500` miles, demonstrated by the synthetic 530-mile Demo SUV July total;
+- target-aware dashboard formatting at `>=500` miles and correct below-target formatting for the current synthetic dataset;
 - expected transaction row counts after corrections;
 - formula-error scanning and macro-enabled package integrity; and
 - restoration of Excel events, calculation, and screen updating after automation.
+
+The 2026-08-11 maintenance release additionally reconciled every vehicle-month in the generated mileage history against the raw mileage table, including first-to-last monthly odometer baselines, single-entry fallbacks, anomalous lower-odometer rows, zero placeholders, carried-forward positive ending mileage, and FYTD totals derived from corrected monthly results.
 
 ## Reservation Boundary Cases
 

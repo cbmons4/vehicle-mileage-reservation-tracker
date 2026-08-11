@@ -2033,7 +2033,7 @@ Private Sub UpdateDashboardData()
         vehicleId = CStr(TableValue(vehicleTable, vehicleIndex, "Vehicle ID"))
         rowNumber = 19 + vehicleIndex
         monthMiles = MonthMilesForVehicle(mileageTable, monthStart, monthEnd, vehicleId)
-        cumulativeMiles = MilesForVehicleDateRange(mileageTable, vehicleId, fiscalYearStart, monthEnd)
+        cumulativeMiles = FiscalYearMilesForVehicle(mileageTable, vehicleId, fiscalYearStart, monthStart)
         scheduledHours = ScheduledHoursForVehicleMonth(reservationTable, vehicleId, monthStart, monthEnd)
         tripDays = TripDaysForVehicleMonth(mileageTable, vehicleId, monthStart, monthEnd)
         tripCount = MonthTripsForVehicle(mileageTable, monthStart, monthEnd, vehicleId)
@@ -4352,9 +4352,7 @@ Private Sub CollectMonthlyMileageStats(ByVal mileageTable As ListObject, ByVal v
     Dim rowIndex As Long
     Dim rowDate As Variant
     Dim rowDateOnly As Date
-    Dim miles As Variant
     Dim endingValue As Variant
-    Dim latestEndingDate As Date
 
     If mileageTable.DataBodyRange Is Nothing Then Exit Sub
 
@@ -4365,9 +4363,6 @@ Private Sub CollectMonthlyMileageStats(ByVal mileageTable As ListObject, ByVal v
                 rowDateOnly = DateOnly(rowDate)
                 If rowDateOnly >= monthStart And rowDateOnly <= monthEnd Then
                     monthTrips = monthTrips + TripCountForRow(mileageTable, rowIndex)
-                    miles = TableValue(mileageTable, rowIndex, "Miles Driven")
-                    If IsNumeric(miles) Then monthMiles = monthMiles + CDbl(miles)
-
                     endingValue = TableValue(mileageTable, rowIndex, "Odometer End")
                     If IsNumeric(endingValue) Then
                         If rowDateOnly = DateOnly(entryDate) Then
@@ -4376,15 +4371,7 @@ Private Sub CollectMonthlyMileageStats(ByVal mileageTable As ListObject, ByVal v
                                 hasDayEnding = True
                             End If
                         End If
-
-                        If Not hasMonthEnding Or rowDateOnly > latestEndingDate _
-                            Or (rowDateOnly = latestEndingDate And CLng(endingValue) > monthEnding) Then
-                            monthEnding = CLng(endingValue)
-                            latestEndingDate = rowDateOnly
-                            hasMonthEnding = True
-                        End If
                     End If
-
                     If rowDateOnly = DateOnly(entryDate) Then
                         dayTrips = dayTrips + TripCountForRow(mileageTable, rowIndex)
                     End If
@@ -4392,6 +4379,15 @@ Private Sub CollectMonthlyMileageStats(ByVal mileageTable As ListObject, ByVal v
             End If
         End If
     Next rowIndex
+
+    monthMiles = MonthMilesForVehicle(mileageTable, monthStart, monthEnd, vehicleId)
+    endingValue = EndingMileageForMonthVehicle(mileageTable, monthStart, monthEnd, vehicleId)
+    If IsNumeric(endingValue) Then
+        If CLng(endingValue) > 0 Then
+            monthEnding = CLng(endingValue)
+            hasMonthEnding = True
+        End If
+    End If
 End Sub
 
 Private Function FindMonthlyMileageMonthRow(ByVal ws As Worksheet, ByVal targetMonth As Date) As Long
@@ -4591,14 +4587,80 @@ End Function
 
 Private Function MonthMilesForVehicle(ByVal mileageTable As ListObject, ByVal monthStart As Date, ByVal monthEnd As Date, ByVal vehicleId As String) As Double
     Dim i As Long
+    Dim rowDate As Date
     Dim miles As Variant
+    Dim endingValue As Variant
+    Dim firstDate As Date
+    Dim latestDate As Date
+    Dim firstEnding As Long
+    Dim latestEnding As Long
+    Dim matchingRows As Long
+    Dim summedMiles As Double
+    Dim hasFirstEnding As Boolean
+    Dim hasLatestEnding As Boolean
+    Dim useSourceTotals As Boolean
+    Dim notesText As String
+
     If mileageTable.DataBodyRange Is Nothing Then Exit Function
+
     For i = 1 To mileageTable.ListRows.Count
-        If IsMileageMatch(mileageTable, i, monthStart, monthEnd, vehicleId) Then
-            miles = TableValue(mileageTable, i, "Miles Driven")
-            If IsNumeric(miles) Then MonthMilesForVehicle = MonthMilesForVehicle + CDbl(miles)
+        If StrComp(Trim$(CStr(TableValue(mileageTable, i, "Vehicle ID"))), vehicleId, vbTextCompare) = 0 _
+                And IsDate(TableValue(mileageTable, i, "Date")) Then
+            rowDate = DateOnly(TableValue(mileageTable, i, "Date"))
+            notesText = CStr(TableValue(mileageTable, i, "Notes"))
+            endingValue = TableValue(mileageTable, i, "Odometer End")
+
+            If rowDate >= monthStart And rowDate <= monthEnd Then
+                matchingRows = matchingRows + 1
+                miles = TableValue(mileageTable, i, "Miles Driven")
+                If IsNumeric(miles) Then summedMiles = summedMiles + CDbl(miles)
+                If InStr(1, notesText, "monthly source adjustment", vbTextCompare) > 0 _
+                        Or InStr(1, notesText, "weekly source", vbTextCompare) > 0 Then
+                    useSourceTotals = True
+                End If
+
+                If IsNumeric(endingValue) Then
+                    If CLng(endingValue) > 0 And InStr(1, notesText, "odometer value lower than prior known ending", vbTextCompare) = 0 Then
+                        If Not hasFirstEnding Or rowDate < firstDate _
+                                Or (rowDate = firstDate And CLng(endingValue) < firstEnding) Then
+                            firstDate = rowDate
+                            firstEnding = CLng(endingValue)
+                            hasFirstEnding = True
+                        End If
+                        If Not hasLatestEnding Or rowDate > latestDate _
+                                Or (rowDate = latestDate And CLng(endingValue) > latestEnding) Then
+                            latestDate = rowDate
+                            latestEnding = CLng(endingValue)
+                            hasLatestEnding = True
+                        End If
+                    End If
+                End If
+            End If
         End If
     Next i
+
+    If useSourceTotals Or matchingRows = 0 Or Not hasLatestEnding Then
+        MonthMilesForVehicle = summedMiles
+    ElseIf hasFirstEnding And latestEnding >= firstEnding Then
+        MonthMilesForVehicle = latestEnding - firstEnding
+    Else
+        MonthMilesForVehicle = summedMiles
+    End If
+End Function
+
+Private Function FiscalYearMilesForVehicle(ByVal mileageTable As ListObject, ByVal vehicleId As String, _
+    ByVal fiscalYearStart As Date, ByVal selectedMonthStart As Date) As Double
+
+    Dim monthCursor As Date
+    Dim monthEnd As Date
+
+    monthCursor = DateSerial(Year(fiscalYearStart), Month(fiscalYearStart), 1)
+    Do While monthCursor <= selectedMonthStart
+        monthEnd = DateSerial(Year(monthCursor), Month(monthCursor) + 1, 0)
+        FiscalYearMilesForVehicle = FiscalYearMilesForVehicle + _
+            MonthMilesForVehicle(mileageTable, monthCursor, monthEnd, vehicleId)
+        monthCursor = DateAdd("m", 1, monthCursor)
+    Loop
 End Function
 
 Private Function EndingMileageForMonthVehicle(ByVal mileageTable As ListObject, ByVal monthStart As Date, ByVal monthEnd As Date, ByVal vehicleId As String) As Variant
@@ -4608,6 +4670,7 @@ Private Function EndingMileageForMonthVehicle(ByVal mileageTable As ListObject, 
     Dim latestDate As Date
     Dim hasEnding As Boolean
     Dim bestEnding As Long
+    Dim notesText As String
 
     If mileageTable.DataBodyRange Is Nothing Then Exit Function
     For i = 1 To mileageTable.ListRows.Count
@@ -4615,16 +4678,19 @@ Private Function EndingMileageForMonthVehicle(ByVal mileageTable As ListObject, 
             rowDate = DateOnly(TableValue(mileageTable, i, "Date"))
             If rowDate <= monthEnd And StrComp(Trim$(CStr(TableValue(mileageTable, i, "Vehicle ID"))), vehicleId, vbTextCompare) = 0 Then
                 endingValue = TableValue(mileageTable, i, "Odometer End")
+                notesText = CStr(TableValue(mileageTable, i, "Notes"))
                 If IsNumeric(endingValue) Then
-                    If Not hasEnding Then
-                        bestEnding = CLng(endingValue)
-                        latestDate = rowDate
-                        hasEnding = True
-                    ElseIf rowDate > latestDate Then
-                        bestEnding = CLng(endingValue)
-                        latestDate = rowDate
-                    ElseIf rowDate = latestDate And CLng(endingValue) > bestEnding Then
-                        bestEnding = CLng(endingValue)
+                    If CLng(endingValue) > 0 And InStr(1, notesText, "odometer value lower than prior known ending", vbTextCompare) = 0 Then
+                        If Not hasEnding Then
+                            bestEnding = CLng(endingValue)
+                            latestDate = rowDate
+                            hasEnding = True
+                        ElseIf rowDate > latestDate Then
+                            bestEnding = CLng(endingValue)
+                            latestDate = rowDate
+                        ElseIf rowDate = latestDate And CLng(endingValue) > bestEnding Then
+                            bestEnding = CLng(endingValue)
+                        End If
                     End If
                 End If
             End If

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.5 - 2026-08-11
+
+- Corrected monthly mileage totals to use the first and last valid ending-odometer readings within each month, with controlled fallbacks for single-entry and imported adjustment rows.
+- Carried the latest positive ending odometer forward when a later month has no new ending reading.
+- Corrected FYTD mileage to sum the reconciled monthly totals instead of raw trip-mile values.
+- Rebuilt and reconciled every historical month in the demonstration workbook and re-ran package, macro, navigation, formula-error, and data-integrity checks.
+
 ## 2.1.4 - 2026-07-21
 
 - Added the verified four-week initial functional release timeline and aligned the public narrative around learn-first, evidence-based, targeted process improvement.
