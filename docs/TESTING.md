@@ -26,6 +26,8 @@ The 2026-08-11 maintenance release additionally reconciled every vehicle-month i
 
 The 2026-08-12 demonstration release verifies August totals of 600, 0, 250, and 300 miles, including a 41,925-mile carry-forward for the zero-mile vehicle. It also verifies reservations in every August week through August 31 and Scheduled Hours of 24, 0, 24, and 24. Scheduled Hours follow the same implementation as both operational branch workbooks: eight hours per unique valid reserved vehicle-date, with duplicate same-day rows counted once and cancelled or maintenance rows excluded.
 
+The 2026-08-12 edit-menu update additionally verifies that both correction menus populate 15 choices, that callback 15 loads the selected mileage or grouped reservation into the dashboard, and that cancellation clears all 15 cached candidate rows. The final navigation run measured workbook open at 2.207 seconds, first weekly navigation at 0.051 seconds, and monthly navigation at 0.285 seconds on the release machine.
+
 ## Reservation Boundary Cases
 
 The reservation suite verifies half-open interval logic, where a booking occupies `[start, end)`:

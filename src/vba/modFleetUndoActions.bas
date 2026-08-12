@@ -2,7 +2,7 @@ Attribute VB_Name = "modFleetUndoActions"
 Option Explicit
 
 Private Const EDIT_APP_TITLE As String = "Fleet Mileage Tool"
-Private Const EDIT_MENU_SIZE As Long = 5
+Private Const EDIT_MENU_SIZE As Long = 15
 Private Const EDIT_SETUP_SHEET As String = "Setup"
 Private Const MILEAGE_EDIT_CELL As String = "B13"
 Private Const RESERVATION_EDIT_CELL As String = "B14"
@@ -29,7 +29,7 @@ Public Sub FleetEditMileage()
     Dim logId As Variant
 
     Set mileageTable = EditGetTable("tblMileageLog")
-    EditSetupSheet().Range("B20:B24").ClearContents
+    EditSetupSheet().Range("B20:B34").ClearContents
     Set popup = EditCreatePopup("FleetRecentMileageMenu")
 
     For rowIndex = mileageTable.ListRows.Count To 1 Step -1
@@ -71,7 +71,7 @@ Public Sub FleetEditReservation()
     Dim idsCsv As String
 
     Set reservationTable = EditGetTable("tblReservations")
-    With EditSetupSheet().Range("C20:C24")
+    With EditSetupSheet().Range("C20:C34")
         .ClearContents
         .numberFormat = "@"
     End With
@@ -130,6 +130,46 @@ Public Sub FleetSelectMileageEdit5()
     EditLoadMileageCandidate 5
 End Sub
 
+Public Sub FleetSelectMileageEdit6()
+    EditLoadMileageCandidate 6
+End Sub
+
+Public Sub FleetSelectMileageEdit7()
+    EditLoadMileageCandidate 7
+End Sub
+
+Public Sub FleetSelectMileageEdit8()
+    EditLoadMileageCandidate 8
+End Sub
+
+Public Sub FleetSelectMileageEdit9()
+    EditLoadMileageCandidate 9
+End Sub
+
+Public Sub FleetSelectMileageEdit10()
+    EditLoadMileageCandidate 10
+End Sub
+
+Public Sub FleetSelectMileageEdit11()
+    EditLoadMileageCandidate 11
+End Sub
+
+Public Sub FleetSelectMileageEdit12()
+    EditLoadMileageCandidate 12
+End Sub
+
+Public Sub FleetSelectMileageEdit13()
+    EditLoadMileageCandidate 13
+End Sub
+
+Public Sub FleetSelectMileageEdit14()
+    EditLoadMileageCandidate 14
+End Sub
+
+Public Sub FleetSelectMileageEdit15()
+    EditLoadMileageCandidate 15
+End Sub
+
 Public Sub FleetSelectReservationEdit1()
     EditLoadReservationCandidate 1
 End Sub
@@ -148,6 +188,46 @@ End Sub
 
 Public Sub FleetSelectReservationEdit5()
     EditLoadReservationCandidate 5
+End Sub
+
+Public Sub FleetSelectReservationEdit6()
+    EditLoadReservationCandidate 6
+End Sub
+
+Public Sub FleetSelectReservationEdit7()
+    EditLoadReservationCandidate 7
+End Sub
+
+Public Sub FleetSelectReservationEdit8()
+    EditLoadReservationCandidate 8
+End Sub
+
+Public Sub FleetSelectReservationEdit9()
+    EditLoadReservationCandidate 9
+End Sub
+
+Public Sub FleetSelectReservationEdit10()
+    EditLoadReservationCandidate 10
+End Sub
+
+Public Sub FleetSelectReservationEdit11()
+    EditLoadReservationCandidate 11
+End Sub
+
+Public Sub FleetSelectReservationEdit12()
+    EditLoadReservationCandidate 12
+End Sub
+
+Public Sub FleetSelectReservationEdit13()
+    EditLoadReservationCandidate 13
+End Sub
+
+Public Sub FleetSelectReservationEdit14()
+    EditLoadReservationCandidate 14
+End Sub
+
+Public Sub FleetSelectReservationEdit15()
+    EditLoadReservationCandidate 15
 End Sub
 
 Public Sub FleetCommitMileageEdit(ByVal logDate As Date, ByVal vehicleId As String, _
@@ -434,7 +514,7 @@ End Sub
 Public Sub FleetCancelAllEdits(Optional ByVal showMessage As Boolean = False)
     FleetCancelMileageEdit False
     FleetCancelReservationEdit False
-    EditSetupSheet().Range("B20:C24").ClearContents
+    EditSetupSheet().Range("B20:C34").ClearContents
     If showMessage Then EditDashboardMessage "Edit mode cancelled."
 End Sub
 

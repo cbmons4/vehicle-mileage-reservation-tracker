@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.8 - 2026-08-12
+
+- Expanded the controlled Edit Mileage and Edit Reservation menus to the 15 most recent transactions.
+- Added and verified dedicated callbacks for entries 1 through 15, including grouped multi-day reservations.
+- Re-ran formula, button-target, workbook-protection, privacy, and navigation-performance audits without changing the synthetic operational data.
+
 ## 2.1.7 - 2026-08-12
 
 - Added synthetic reservations across every August week through August 31 for a complete calendar demonstration.

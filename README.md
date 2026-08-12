@@ -19,7 +19,7 @@ Small fleet workflows often span separate spreadsheets, calendars, and messages.
 - Allows multiple bookings for the same vehicle on the same day when their times do not overlap.
 - Uses half-open time boundaries: a reservation occupies `[start, end)`, so an 8:00 AM-12:00 PM booking may be followed by a 12:00 PM-5:00 PM booking.
 - Blocks actual time overlaps, invalid time ranges, double bookings, and reservations during maintenance.
-- Loads recent transactions into the dashboard for controlled editing or deletion; multi-day reservations are handled as a group.
+- Loads the 15 most recent mileage and reservation transactions into the dashboard for controlled editing or deletion; multi-day reservations are handled as a group.
 - Preserves dated maintenance history instead of replacing history with only the vehicle's current status.
 - Produces weekly schedules, monthly mileage history, fiscal-year totals, trip counts, scheduled hours, and current vehicle status.
 - Calculates Scheduled Hours as eight hours per unique valid reserved vehicle-date; cancelled and maintenance entries do not count toward the metric.

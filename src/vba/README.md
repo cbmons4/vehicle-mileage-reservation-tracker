@@ -26,7 +26,7 @@ User actions follow a consistent sequence:
 5. Recalculate affected odometers, maintenance state, metrics, and reports.
 6. Restore Excel events, calculation, and screen state on success or failure.
 
-Recent mileage and reservation records are loaded back into the dashboard instead of requiring direct table edits. Multi-day reservations remain grouped while their date range is expanded, contracted, moved, or deleted.
+The 15 most recent mileage and reservation records are loaded back into the dashboard instead of requiring direct table edits. Multi-day reservations remain grouped while their date range is expanded, contracted, moved, or deleted.
 
 ## Reservation Rules
 
