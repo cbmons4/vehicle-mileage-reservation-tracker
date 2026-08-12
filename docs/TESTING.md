@@ -22,7 +22,9 @@ The 2026-07-20 release candidate passed checks covering:
 - formula-error scanning and macro-enabled package integrity; and
 - restoration of Excel events, calculation, and screen updating after automation.
 
-The 2026-08-11 maintenance release additionally reconciled every vehicle-month in the generated mileage history against the raw mileage table. The final calculation subtracts the latest valid ending odometer through the prior month from the latest valid ending odometer in the current month, retains zero mileage with a carried-forward ending odometer when no new reading exists, excludes flagged lower-odometer anomalies and zero placeholders, and derives FYTD mileage from the corrected monthly totals. The sanitized August example verifies totals of 300, 0, 250, and 300 miles, including a 41,925-mile carry-forward for the zero-mile vehicle.
+The 2026-08-11 maintenance release additionally reconciled every vehicle-month in the generated mileage history against the raw mileage table. The final calculation subtracts the latest valid ending odometer through the prior month from the latest valid ending odometer in the current month, retains zero mileage with a carried-forward ending odometer when no new reading exists, excludes flagged lower-odometer anomalies and zero placeholders, and derives FYTD mileage from the corrected monthly totals.
+
+The 2026-08-12 demonstration release verifies August totals of 600, 0, 250, and 300 miles, including a 41,925-mile carry-forward for the zero-mile vehicle. It also verifies reservations in every August week through August 31 and Scheduled Hours of 24, 0, 24, and 24. Scheduled Hours follow the same implementation as both operational branch workbooks: eight hours per unique valid reserved vehicle-date, with duplicate same-day rows counted once and cancelled or maintenance rows excluded.
 
 ## Reservation Boundary Cases
 

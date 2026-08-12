@@ -22,6 +22,7 @@ Small fleet workflows often span separate spreadsheets, calendars, and messages.
 - Loads recent transactions into the dashboard for controlled editing or deletion; multi-day reservations are handled as a group.
 - Preserves dated maintenance history instead of replacing history with only the vehicle's current status.
 - Produces weekly schedules, monthly mileage history, fiscal-year totals, trip counts, scheduled hours, and current vehicle status.
+- Calculates Scheduled Hours as eight hours per unique valid reserved vehicle-date; cancelled and maintenance entries do not count toward the metric.
 
 ## Controls and Reliability
 
@@ -32,7 +33,7 @@ Small fleet workflows often span separate spreadsheets, calendars, and messages.
 - Reservation edits exclude the selected group from conflict checks, then update, add, or remove its dated rows as one workflow.
 - Generated report sheets are protected from accidental direct changes while approved dashboard actions remain available.
 - The dashboard applies target-aware formatting to monthly totals, with the 500-mile threshold shown directly in the report.
-- The sanitized workbook includes July and August examples, including an August zero-mile vehicle whose July ending odometer carries forward.
+- The sanitized workbook includes July and August examples, reservations spanning every August week, a 600-mile compliant vehicle, and a zero-mile vehicle whose July ending odometer carries forward.
 - VBA restores Excel events, calculation, and screen state on success and error paths.
 
 ## Lightweight Architecture

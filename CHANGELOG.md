@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.7 - 2026-08-12
+
+- Added synthetic reservations across every August week through August 31 for a complete calendar demonstration.
+- Expanded the August mileage example so Demo SUV reaches 600 miles and displays the green compliant state.
+- Verified Scheduled Hours against the operational branch implementation: each unique valid reserved date contributes eight hours, while cancelled and maintenance rows are excluded.
+- Retained the zero-mile Demo Crossover example with its July ending odometer carried forward into August.
+- Re-ran workbook integrity, formula, protection, privacy, visual, and navigation-performance audits.
+
 ## 2.1.6 - 2026-08-11
 
 - Revised monthly mileage to subtract the latest valid ending odometer through the prior month from the latest valid ending odometer in the current month.
