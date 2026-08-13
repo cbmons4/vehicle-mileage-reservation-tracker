@@ -30,6 +30,8 @@ The 2026-08-12 edit-menu update additionally verifies that both correction menus
 
 The follow-up demonstration-data release verifies both dashboard Clear actions against the current system date and provides enough synthetic September mileage and independent reservation transactions for all 15 menu positions to appear without temporary test records. Its final run measured workbook open at 1.785 seconds, initial weekly navigation at 0.047 seconds, and monthly navigation at 0.281 seconds.
 
+The 2026-08-13 visual demonstration update verifies two Demo SUV reservations in the same current-week dashboard status cell: Morgan Chen on August 13 and Alex Rivera on August 14. Scheduled Hours update to 32.0 for the vehicle, the final workbook opens in 1.600 seconds, and first weekly navigation completes in 0.328 seconds on the release machine.
+
 ## Reservation Boundary Cases
 
 The reservation suite verifies half-open interval logic, where a booking occupies `[start, end)`:

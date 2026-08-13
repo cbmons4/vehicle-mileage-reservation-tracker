@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.10 - 2026-08-13
+
+- Added a second synthetic Demo SUV reservation in the current week so the dashboard demonstrates multiple bookings in one Checkout Status cell.
+- Refreshed the saved dashboard dates and dashboard screenshot for August 13, 2026.
+- Verified the updated 32 scheduled hours for Demo SUV, package privacy, VBA protection, button targets, and navigation performance.
+
 ## 2.1.9 - 2026-08-12
 
 - Confirmed that Clear Mileage and Clear Reservation reset their dashboard calendar dates to the current date.
