@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.9 - 2026-08-12
+
+- Confirmed that Clear Mileage and Clear Reservation reset their dashboard calendar dates to the current date.
+- Added four synthetic September mileage transactions and eight independent September reservations so both correction menus visibly contain 15 editable choices.
+- Normalized synthetic demonstration transaction IDs to numeric values used by the controlled edit workflow.
+- Re-ran formula, button-target, protection, privacy, and navigation-performance audits.
+
 ## 2.1.8 - 2026-08-12
 
 - Expanded the controlled Edit Mileage and Edit Reservation menus to the 15 most recent transactions.

@@ -28,6 +28,8 @@ The 2026-08-12 demonstration release verifies August totals of 600, 0, 250, and 
 
 The 2026-08-12 edit-menu update additionally verifies that both correction menus populate 15 choices, that callback 15 loads the selected mileage or grouped reservation into the dashboard, and that cancellation clears all 15 cached candidate rows. The final navigation run measured workbook open at 2.207 seconds, first weekly navigation at 0.051 seconds, and monthly navigation at 0.285 seconds on the release machine.
 
+The follow-up demonstration-data release verifies both dashboard Clear actions against the current system date and provides enough synthetic September mileage and independent reservation transactions for all 15 menu positions to appear without temporary test records. Its final run measured workbook open at 1.785 seconds, initial weekly navigation at 0.047 seconds, and monthly navigation at 0.281 seconds.
+
 ## Reservation Boundary Cases
 
 The reservation suite verifies half-open interval logic, where a booking occupies `[start, end)`:

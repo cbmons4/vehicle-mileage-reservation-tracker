@@ -33,7 +33,7 @@ Small fleet workflows often span separate spreadsheets, calendars, and messages.
 - Reservation edits exclude the selected group from conflict checks, then update, add, or remove its dated rows as one workflow.
 - Generated report sheets are protected from accidental direct changes while approved dashboard actions remain available.
 - The dashboard applies target-aware formatting to monthly totals, with the 500-mile threshold shown directly in the report.
-- The sanitized workbook includes July and August examples, reservations spanning every August week, a 600-mile compliant vehicle, and a zero-mile vehicle whose July ending odometer carries forward.
+- The sanitized workbook includes July, August, and September examples, reservations spanning every August week plus independent September transactions, a 600-mile compliant vehicle, and a zero-mile vehicle whose July ending odometer carries forward.
 - VBA restores Excel events, calculation, and screen state on success and error paths.
 
 ## Lightweight Architecture
